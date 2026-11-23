@@ -7,14 +7,12 @@ int findMaxInRange(const int* arr, int size, int K, int M);
 
 int main(void) {
     setlocale(LC_CTYPE, "RUS");
-    int arr[MAX_SIZE]; 
+    int arr[MAX_SIZE];
     int n;
-    
-    printf("Введите размер массива (от 1 до %d): ", MAX_SIZE);
-    scanf("%d", &n);
 
-    if (n <= 0 || n > MAX_SIZE) {
-        printf("Ошибка: недопустимый размер массива.\n");
+    printf("Введите размер массива (от 1 до %d): ", MAX_SIZE);
+    if (scanf("%d", &n) != 1 || n <= 0 || n > MAX_SIZE) {
+        printf("Ошибка: некорректный размер массива.\n");
         return 1;
     }
 
@@ -36,7 +34,7 @@ int main(void) {
     scanf("%d", &M);
 
     if (K < 0 || K >= n || M < 0 || M >= n) {
-        printf("Ошибка: индексы выходят за границы массива [0, %d]!\n", n - 1);
+        printf("Ошибка: введенные индексы выходят за границы массива [0, %d].\n", n - 1);
         return 1;
     }
 
@@ -53,11 +51,17 @@ int findMaxInRange(const int* arr, int size, int K, int M) {
         M = temp;
     }
 
+    if (K < 0 || M >= size) {
+        printf("Ошибка: индексы выходят за границы массива.\n");
+        return 0;
+    }
+
     int maxVal = arr[K];
     for (int i = K + 1; i <= M; i++) {
         if (arr[i] > maxVal) {
             maxVal = arr[i];
         }
     }
+
     return maxVal;
 }
